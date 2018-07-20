@@ -38,6 +38,8 @@ public class Tm4jJUnitListener extends RunListener {
 
         if (annotation != null) {
             Tm4jExecutionResult executionResult = new Tm4jExecutionResult();
+
+            executionResult.setSource(description.getTestClass().getName() + "." + description.getMethodName());
             executionResult.setTestCaseKey(annotation.value());
             executionResult.setResult(getResultFor(description));
             tm4jJUnitResults.addResult(executionResult);

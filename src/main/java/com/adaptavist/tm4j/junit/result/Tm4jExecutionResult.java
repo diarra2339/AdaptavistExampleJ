@@ -2,6 +2,7 @@ package com.adaptavist.tm4j.junit.result;
 
 public class Tm4jExecutionResult {
 
+    private String source;
     private String testCaseKey;
     private String result;
 
@@ -19,5 +20,13 @@ public class Tm4jExecutionResult {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

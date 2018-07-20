@@ -6,6 +6,7 @@ import com.adaptavist.tm4j.junit.result.Tm4jJUnitResults;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
@@ -27,7 +28,7 @@ public class Tm4jJUnitListener extends RunListener {
     @Override
     public void testFailure(Failure failure) throws Exception {
         super.testFailure(failure);
-        failedTestMethodNames.add(failure.getDescription().getMethodName());
+        failedTestMethodNames.add(testMethodIdentifier(failure.getDescription()));
     }
 
     @Override
@@ -39,15 +40,21 @@ public class Tm4jJUnitListener extends RunListener {
         if (annotation != null) {
             Tm4jExecutionResult executionResult = new Tm4jExecutionResult();
 
-            executionResult.setSource(description.getTestClass().getName() + "." + description.getMethodName());
+            String testMethodIdentifier = testMethodIdentifier(description);
+            executionResult.setSource(testMethodIdentifier);
             executionResult.setTestCaseKey(annotation.value());
-            executionResult.setResult(getResultFor(description));
+            executionResult.setResult(getResultFor(testMethodIdentifier));
+
             tm4jJUnitResults.addResult(executionResult);
         }
     }
 
-    private String getResultFor(Description description) {
-        return failedTestMethodNames.contains(description.getMethodName()) ?
+    private String testMethodIdentifier(Description description) {
+        return description.getTestClass().getName() + "." + description.getMethodName();
+    }
+
+    private String getResultFor(String testMethodIdentifier) {
+        return failedTestMethodNames.contains(testMethodIdentifier) ?
                 "Failed" : "Passed";
     }
 

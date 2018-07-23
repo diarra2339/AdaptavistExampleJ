@@ -2,10 +2,12 @@
 
 This project is a TM4J JUnit Integration which aims to generate a file describing the test execution result for each Test Case.
 
-In order to achieve that, you need to annotate the JUnit methods with @TestCaseKey.
+In order to achieve that, you need to annotate the JUnit methods with ```@TestCaseKey```.
 
 
 ## Usage
+
+You can have a look at this [TM4J JUnit Integration Example](https://stash.adaptavist.com/projects/ATM/repos/tm4j-junit-integration-example/browse) repository.
 
 You need to add the dependency to your pom file.
 
@@ -46,12 +48,24 @@ Also, you'll need to register the TM4J JUnit Listener.
 The next step is to annotate your JUnit tests with ```@TestCaseKey```
 
 ```
-@Test
-@TestCaseKey("JQA-T1")
-public void sumTwoNumbersAndPass() {
-    Calculator calculator = new Calculator();
-    assertEquals(3, calculator.sum(1, 2));
+public class CalculatorSumTest {
+
+    @Test
+    @TestCaseKey("JQA-T1")
+    public void sumTwoNumbersAndPass() {
+        Calculator calculator = new Calculator();
+        assertEquals(1, calculator.sum(1, 2));
+    }
+
+    @Test
+    @TestCaseKey("JQA-T2")
+    public void sumTwoNumbersAndFail() {
+        Calculator calculator = new Calculator();
+        assertNotEquals(2, calculator.sum(1, 2));
+    }
+
 }
+
 ```
 
 
@@ -66,6 +80,11 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
          "source":"CalculatorSumTest.sumTwoNumbersAndPass",
          "testCaseKey":"JQA-T1",
          "result":"Passed"
+      },
+      {
+        "source":"CalculatorSumTest.sumTwoNumbersAndFail",
+        "testCaseKey":"JQA-T2",
+        "result":"Failed"
       }
    ]
 }

@@ -4,6 +4,7 @@ import org.junit.runner.Description;
 
 public class TM4JJUnitTestMethodID {
 
+    public static final String PARAMETERIZED_TEST_NAME_PATTERN = "\\[[0-9]+\\]$";
     private Description description;
 
     public TM4JJUnitTestMethodID(Description description) {
@@ -12,12 +13,12 @@ public class TM4JJUnitTestMethodID {
 
     public String getDescription() {
         String testClassName = description.getTestClass().getName();
-        String methodName = getMethodNameFor(description);
+        String methodName = getMethodName();
         return testClassName + "." + methodName;
     }
 
-    private String getMethodNameFor(Description description) {
-        return description.getMethodName().replaceFirst("\\[[0-9]+\\]$", "");
+    private String getMethodName() {
+        return description.getMethodName().replaceFirst(PARAMETERIZED_TEST_NAME_PATTERN, "");
     }
 
     @Override

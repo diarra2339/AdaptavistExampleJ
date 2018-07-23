@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Tm4jJUnitResultsBuilder {
+public class Tm4jJUnitResultsFileBuilder {
+
+    public static final String FAILED = "Failed";
+    public static final String PASSED = "Passed";
+    public static final String DEFAULT_TM4J_RESULT_FILE_NAME = "tm4j_result.json";
 
     private Tm4jJUnitResults tm4jJUnitResults = new Tm4jJUnitResults();
     private List<TM4JJUnitTestMethodID> failedTests = new ArrayList();
@@ -20,13 +24,10 @@ public class Tm4jJUnitResultsBuilder {
     }
 
     public void registerResult(String testCaseKey, TM4JJUnitTestMethodID testMethodId) {
-        Optional<Tm4jExecutionResult> tm4jExecutionResultForMethodIdentifier = tm4jJUnitResults.getResults()
-                .stream()
-                .filter(r -> r.getSource().equals(testMethodId.getDescription()))
-                .findFirst();
+        Optional<Tm4jExecutionResult> tm4jExecutionResultForMethodId = tm4jJUnitResults.getRegisteredResultFor(testMethodId);
 
-        if (tm4jExecutionResultForMethodIdentifier.isPresent()) {
-            Tm4jExecutionResult executionResult = tm4jExecutionResultForMethodIdentifier.get();
+        if (tm4jExecutionResultForMethodId.isPresent()) {
+            Tm4jExecutionResult executionResult = tm4jExecutionResultForMethodId.get();
             executionResult.setResult(getResultFor(testMethodId));
         } else {
             registerNewResult(testCaseKey, testMethodId);
@@ -44,12 +45,11 @@ public class Tm4jJUnitResultsBuilder {
     }
 
     private String getResultFor(TM4JJUnitTestMethodID testMethodId) {
-        return failedTests.contains(testMethodId) ?
-                "Failed" : "Passed";
+        return failedTests.contains(testMethodId) ? FAILED : PASSED;
     }
 
     public void generateResultsFile() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File("tm4j_result.json"), tm4jJUnitResults);
+        objectMapper.writeValue(new File(DEFAULT_TM4J_RESULT_FILE_NAME), tm4jJUnitResults);
     }
 }

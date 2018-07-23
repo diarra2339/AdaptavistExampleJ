@@ -1,0 +1,1 @@
+{"results":[{"source":"com.adaptavist.tm4j.junit.Tm4JJUnitResultsFileBuilderTest.shouldHaveOneResultForEachTestCaseKey","testCaseKey":"JQA-T1","result":"Passed"},{"source":"com.adaptavist.tm4j.junit.Tm4JJUnitResultsFileBuilderTest.shouldCreateFileWithEmptyResult","testCaseKey":"JQA-T2","result":"Passed"}]}

@@ -1,7 +1,7 @@
 package com.adaptavist.tm4j.junit.listener;
 
 import com.adaptavist.tm4j.junit.TM4JJUnitTestMethodID;
-import com.adaptavist.tm4j.junit.Tm4jJUnitResultsBuilder;
+import com.adaptavist.tm4j.junit.Tm4jJUnitResultsFileBuilder;
 import com.adaptavist.tm4j.junit.annotation.TestCaseKey;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -10,12 +10,12 @@ import org.junit.runner.notification.RunListener;
 
 public class Tm4jJUnitListener extends RunListener {
 
-    private Tm4jJUnitResultsBuilder tm4jJUnitResultsBuilder;
+    private Tm4jJUnitResultsFileBuilder tm4JJUnitResultsFileBuilder;
 
     @Override
     public void testRunStarted(Description description) throws Exception {
         super.testRunStarted(description);
-        tm4jJUnitResultsBuilder = new Tm4jJUnitResultsBuilder();
+        tm4JJUnitResultsFileBuilder = new Tm4jJUnitResultsFileBuilder();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Tm4jJUnitListener extends RunListener {
 
         if (annotation != null) {
             TM4JJUnitTestMethodID testMethodId = new TM4JJUnitTestMethodID(failure.getDescription());
-            tm4jJUnitResultsBuilder.registerFailure(testMethodId);
+            tm4JJUnitResultsFileBuilder.registerFailure(testMethodId);
         }
     }
 
@@ -38,13 +38,13 @@ public class Tm4jJUnitListener extends RunListener {
         if (annotation != null) {
             String testCaseKey = annotation.value();
             TM4JJUnitTestMethodID testMethodId = new TM4JJUnitTestMethodID(description);
-            tm4jJUnitResultsBuilder.registerResult(testCaseKey, testMethodId);
+            tm4JJUnitResultsFileBuilder.registerResult(testCaseKey, testMethodId);
         }
     }
 
     @Override
     public void testRunFinished(Result result) throws Exception {
         super.testRunFinished(result);
-        tm4jJUnitResultsBuilder.generateResultsFile();
+        tm4JJUnitResultsFileBuilder.generateResultsFile();
     }
 }

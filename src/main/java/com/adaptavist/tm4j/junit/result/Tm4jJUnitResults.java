@@ -1,7 +1,10 @@
 package com.adaptavist.tm4j.junit.result;
 
+import com.adaptavist.tm4j.junit.TM4JJUnitTestMethodID;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Tm4jJUnitResults {
 
@@ -17,5 +20,12 @@ public class Tm4jJUnitResults {
 
     public void addResult(Tm4jExecutionResult executionResult) {
         results.add(executionResult);
+    }
+
+    public Optional<Tm4jExecutionResult> getRegisteredResultFor(TM4JJUnitTestMethodID testMethodId) {
+        return results
+                .stream()
+                .filter(r -> r.getSource().equals(testMethodId.getDescription()))
+                .findFirst();
     }
 }

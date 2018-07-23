@@ -6,13 +6,13 @@ import com.adaptavist.tm4j.junit.result.Tm4jJUnitResults;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
-import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Tm4jJUnitListener extends RunListener {
 
@@ -38,19 +38,36 @@ public class Tm4jJUnitListener extends RunListener {
         TestCaseKey annotation = description.getAnnotation(TestCaseKey.class);
 
         if (annotation != null) {
-            Tm4jExecutionResult executionResult = new Tm4jExecutionResult();
+            final String testMethodIdentifier = testMethodIdentifier(description);
 
-            String testMethodIdentifier = testMethodIdentifier(description);
-            executionResult.setSource(testMethodIdentifier);
-            executionResult.setTestCaseKey(annotation.value());
-            executionResult.setResult(getResultFor(testMethodIdentifier));
+            Optional<Tm4jExecutionResult> tm4jExecutionResultForMethodIdentifier = tm4jJUnitResults.getResults()
+                    .stream()
+                    .filter(r -> r.getSource().equals(testMethodIdentifier))
+                    .findFirst();
 
-            tm4jJUnitResults.addResult(executionResult);
+            if (tm4jExecutionResultForMethodIdentifier.isPresent()) {
+                Tm4jExecutionResult executionResult = tm4jExecutionResultForMethodIdentifier.get();
+                executionResult.setResult(getResultFor(testMethodIdentifier));
+            } else {
+                Tm4jExecutionResult executionResult = new Tm4jExecutionResult();
+
+                executionResult.setSource(testMethodIdentifier);
+                executionResult.setTestCaseKey(annotation.value());
+                executionResult.setResult(getResultFor(testMethodIdentifier));
+
+                tm4jJUnitResults.addResult(executionResult);
+            }
         }
     }
 
     private String testMethodIdentifier(Description description) {
-        return description.getTestClass().getName() + "." + description.getMethodName();
+        String testClassName = description.getTestClass().getName();
+        String methodName = getMethodNameFor(description);
+        return testClassName + "." + methodName;
+    }
+
+    private String getMethodNameFor(Description description) {
+        return description.getMethodName().replaceFirst("\\[[0-9]+\\]$", "");
     }
 
     private String getResultFor(String testMethodIdentifier) {

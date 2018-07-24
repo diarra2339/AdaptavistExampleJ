@@ -6,3 +6,4 @@ target
 .classpath
 .project
 .settings/
+tm4j_result.json

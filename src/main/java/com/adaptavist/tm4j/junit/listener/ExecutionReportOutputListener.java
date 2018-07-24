@@ -1,21 +1,21 @@
 package com.adaptavist.tm4j.junit.listener;
 
-import com.adaptavist.tm4j.junit.TM4JJUnitTestMethodID;
-import com.adaptavist.tm4j.junit.Tm4jJUnitResultsFileBuilder;
+import com.adaptavist.tm4j.junit.JUnitTestMethodID;
+import com.adaptavist.tm4j.junit.ExecutionReportOutputFileBuilder;
 import com.adaptavist.tm4j.junit.annotation.TestCaseKey;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
-public class Tm4jJUnitListener extends RunListener {
+public class ExecutionReportOutputListener extends RunListener {
 
-    private Tm4jJUnitResultsFileBuilder tm4JJUnitResultsFileBuilder;
+    private ExecutionReportOutputFileBuilder executionReportOutputFileBuilder;
 
     @Override
     public void testRunStarted(Description description) throws Exception {
         super.testRunStarted(description);
-        tm4JJUnitResultsFileBuilder = new Tm4jJUnitResultsFileBuilder();
+        executionReportOutputFileBuilder = new ExecutionReportOutputFileBuilder();
     }
 
     @Override
@@ -24,8 +24,8 @@ public class Tm4jJUnitListener extends RunListener {
         TestCaseKey annotation = failure.getDescription().getAnnotation(TestCaseKey.class);
 
         if (annotation != null) {
-            TM4JJUnitTestMethodID testMethodId = new TM4JJUnitTestMethodID(failure.getDescription());
-            tm4JJUnitResultsFileBuilder.registerFailure(testMethodId);
+            JUnitTestMethodID testMethodId = new JUnitTestMethodID(failure.getDescription());
+            executionReportOutputFileBuilder.registerFailure(testMethodId);
         }
     }
 
@@ -37,14 +37,14 @@ public class Tm4jJUnitListener extends RunListener {
 
         if (annotation != null) {
             String testCaseKey = annotation.value();
-            TM4JJUnitTestMethodID testMethodId = new TM4JJUnitTestMethodID(description);
-            tm4JJUnitResultsFileBuilder.registerResult(testCaseKey, testMethodId);
+            JUnitTestMethodID testMethodId = new JUnitTestMethodID(description);
+            executionReportOutputFileBuilder.registerResult(testCaseKey, testMethodId);
         }
     }
 
     @Override
     public void testRunFinished(Result result) throws Exception {
         super.testRunFinished(result);
-        tm4JJUnitResultsFileBuilder.generateResultsFile();
+        executionReportOutputFileBuilder.generateResultsFile();
     }
 }

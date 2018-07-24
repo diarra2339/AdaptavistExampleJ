@@ -1,6 +1,6 @@
 package com.adaptavist.tm4j.junit.result;
 
-public class Tm4jExecutionResult {
+public class ExecutionResult {
 
     private String source;
     private String testCaseKey;

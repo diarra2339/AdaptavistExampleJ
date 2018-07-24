@@ -2,12 +2,12 @@ package com.adaptavist.tm4j.junit;
 
 import org.junit.runner.Description;
 
-public class TM4JJUnitTestMethodID {
+public class JUnitTestMethodID {
 
     public static final String PARAMETERIZED_TEST_NAME_PATTERN = "\\[[0-9]+\\]$";
     private Description description;
 
-    public TM4JJUnitTestMethodID(Description description) {
+    public JUnitTestMethodID(Description description) {
         this.description = description;
     }
 
@@ -23,8 +23,8 @@ public class TM4JJUnitTestMethodID {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TM4JJUnitTestMethodID) {
-            TM4JJUnitTestMethodID testMethodID = (TM4JJUnitTestMethodID) obj;
+        if (obj instanceof JUnitTestMethodID) {
+            JUnitTestMethodID testMethodID = (JUnitTestMethodID) obj;
             return this.getDescription().equals(testMethodID.getDescription());
         }
 

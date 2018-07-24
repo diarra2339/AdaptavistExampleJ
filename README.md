@@ -35,7 +35,7 @@ Also, you'll need to register the TM4J JUnit Listener.
                 <properties>
                     <property>
                         <name>listener</name>
-                        <value>com.adaptavist.tm4j.junit.listener.Tm4jJUnitListener</value>
+                        <value>com.adaptavist.tm4j.junit.listener.ExecutionReportOutputListener</value>
                     </property>
                 </properties>
             </configuration>
@@ -75,7 +75,7 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
 
 ```
 {
-   "results":[
+   "executions":[
       {
          "source":"CalculatorSumTest.sumTwoNumbersAndPass",
          "testCaseKey":"JQA-T1",

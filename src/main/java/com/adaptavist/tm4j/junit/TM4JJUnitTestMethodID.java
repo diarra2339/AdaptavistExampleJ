@@ -23,7 +23,11 @@ public class TM4JJUnitTestMethodID {
 
     @Override
     public boolean equals(Object obj) {
-        TM4JJUnitTestMethodID testMethodID = (TM4JJUnitTestMethodID) obj;
-        return this.getDescription().equals(testMethodID.getDescription());
+        if (obj instanceof TM4JJUnitTestMethodID) {
+            TM4JJUnitTestMethodID testMethodID = (TM4JJUnitTestMethodID) obj;
+            return this.getDescription().equals(testMethodID.getDescription());
+        }
+
+        return false;
     }
 }

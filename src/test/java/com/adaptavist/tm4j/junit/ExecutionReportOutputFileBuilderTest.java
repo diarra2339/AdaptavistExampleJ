@@ -22,6 +22,31 @@ public class ExecutionReportOutputFileBuilderTest {
     }
 
     @Test
+    public void shouldHaveOnePassedAndOneFailResultForEachNotMappedToTestCaseKeyMethod() throws IOException {
+        ExecutionReportOutputFileBuilder fileBuilder = new ExecutionReportOutputFileBuilder();
+
+        Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldPassWithoutATestCaseKey");
+        fileBuilder.registerResult(null, new JUnitTestMethodID(descriptionJQAT1));
+
+        Description descriptionJQAT2 = Description.createTestDescription(this.getClass(), "shouldFailWithoutATestCaseKey");
+        JUnitTestMethodID failedTestMethodId = new JUnitTestMethodID(descriptionJQAT2);
+        fileBuilder.registerFailure(failedTestMethodId);
+        fileBuilder.registerResult(null, new JUnitTestMethodID(descriptionJQAT2));
+
+        fileBuilder.generateResultsFile();
+
+        ExecutionResults executionResults = getTm4jJUnitResults();
+
+        Assert.assertEquals(2, executionResults.getExecutions().size());
+
+        ExecutionResult jqat1Result = executionResults.getExecutions().get(0);
+        Assert.assertEquals(ExecutionReportOutputFileBuilder.PASSED, jqat1Result.getResult());
+
+        ExecutionResult jqat2Result = executionResults.getExecutions().get(1);
+        Assert.assertEquals(ExecutionReportOutputFileBuilder.FAILED, jqat2Result.getResult());
+    }
+
+    @Test
     public void shouldHaveOnePassedResultForEachTestCaseKeyWhenThereWasNoFail() throws IOException {
         ExecutionReportOutputFileBuilder fileBuilder = new ExecutionReportOutputFileBuilder();
 

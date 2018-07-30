@@ -4,6 +4,8 @@ This project is a TM4J JUnit Integration which aims to generate a file describin
 
 In order to achieve that, you need to annotate the JUnit methods with ```@TestCaseKey```.
 
+JUnit methods which are not annotated with ```@TestCaseKey``` will also be added to the JSON file, but without the testCaseKey property.
+
 
 ## Usage
 
@@ -45,7 +47,7 @@ Also, you'll need to register the TM4J JUnit Listener.
 ```
 
 
-The next step is to annotate your JUnit tests with ```@TestCaseKey```
+The next step is to annotate your JUnit tests with ```@TestCaseKey``` or don't annotate at all, if the Test Case doesn't exist yet.
 
 ```
 public class CalculatorSumTest {
@@ -62,6 +64,12 @@ public class CalculatorSumTest {
     public void sumTwoNumbersAndFail() {
         Calculator calculator = new Calculator();
         assertNotEquals(2, calculator.sum(1, 2));
+    }
+    
+    @Test
+    public void notMappedToTestCaseAndPass() {
+        Calculator calculator = new Calculator();
+        assertEquals(1, calculator.sum(1, 2));
     }
 
 }
@@ -85,7 +93,11 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
         "source":"CalculatorSumTest.sumTwoNumbersAndFail",
         "testCaseKey":"JQA-T2",
         "result":"Failed"
-      }
+      },
+      {
+        "source":"CalculatorSumTest.notMappedToTestCaseAndPass",
+        "result":"Passed"
+      }      
    ]
 }
 ```

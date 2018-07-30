@@ -1,8 +1,12 @@
 package com.adaptavist.tm4j.junit.result;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class ExecutionResult {
 
     private String source;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String testCaseKey;
     private String result;
 

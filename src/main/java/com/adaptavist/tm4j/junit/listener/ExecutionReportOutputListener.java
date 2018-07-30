@@ -35,11 +35,10 @@ public class ExecutionReportOutputListener extends RunListener {
 
         TestCaseKey annotation = description.getAnnotation(TestCaseKey.class);
 
-        if (annotation != null) {
-            String testCaseKey = annotation.value();
-            JUnitTestMethodID testMethodId = new JUnitTestMethodID(description);
-            executionReportOutputFileBuilder.registerResult(testCaseKey, testMethodId);
-        }
+        String testCaseKey = annotation != null ? annotation.value() : null;
+
+        JUnitTestMethodID testMethodId = new JUnitTestMethodID(description);
+        executionReportOutputFileBuilder.registerResult(testCaseKey, testMethodId);
     }
 
     @Override

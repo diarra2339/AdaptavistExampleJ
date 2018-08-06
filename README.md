@@ -9,7 +9,7 @@ JUnit methods which are not annotated with ```@TestCaseKey``` will also be added
 
 ## Usage
 
-You can have a look at this [TM4J JUnit Integration Example](https://stash.adaptavist.com/projects/ATM/repos/tm4j-junit-integration-example/browse) repository.
+You can have a look at this [TM4J JUnit Integration Example](https://bitbucket.org/Adaptavist/tm4j-junit-integration-example/) repository.
 
 You need to add the dependency to your pom file.
 

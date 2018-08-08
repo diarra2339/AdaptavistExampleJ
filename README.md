@@ -2,9 +2,11 @@
 
 This project is a TM4J JUnit Integration which aims to generate a file describing the test execution result for each Test Case.
 
-In order to achieve that, you need to annotate the JUnit methods with ```@TestCaseKey```.
+In order to achieve that, you need to annotate the JUnit methods with ```@TestCaseKey``` or ```@TestCase(name = "")```.
 
-JUnit methods which are not annotated with ```@TestCaseKey``` will also be added to the JSON file, but without the testCaseKey property.
+JUnit methods which are not annotated with ```@TestCaseKey``` will also be added to the JSON file, but without the testCase key property.
+
+JUnit methods which are not annotated with ```@TestCase(name = "")``` will also be added to the JSON file, but without the testCase name property.
 
 
 ## Usage
@@ -37,7 +39,7 @@ Also, you'll need to register the TM4J JUnit Listener.
                 <properties>
                     <property>
                         <name>listener</name>
-                        <value>com.adaptavist.tm4j.junit.listener.ExecutionReportOutputListener</value>
+                        <value>com.adaptavist.tm4j.junit.ExecutionListener</value>
                     </property>
                 </properties>
             </configuration>
@@ -71,6 +73,13 @@ public class CalculatorSumTest {
         Calculator calculator = new Calculator();
         assertEquals(1, calculator.sum(1, 2));
     }
+    
+    @Test
+    @TestCase(name = "Mapped to Test Case Name and Pass")
+    public void mappedToTestCaseNameAndPass() {
+        Calculator calculator = new Calculator();
+        assertEquals(1, calculator.sum(1, 2));
+    }    
 
 }
 
@@ -86,18 +95,29 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
    "executions":[
       {
          "source":"CalculatorSumTest.sumTwoNumbersAndPass",
-         "testCaseKey":"JQA-T1",
-         "result":"Passed"
+         "result":"Passed",
+         "testCase": {
+            "key": "JQA-T1"
+         }
       },
       {
         "source":"CalculatorSumTest.sumTwoNumbersAndFail",
-        "testCaseKey":"JQA-T2",
-        "result":"Failed"
+        "result":"Failed",
+         "testCase": {
+            "key": "JQA-T2"
+         }
       },
       {
         "source":"CalculatorSumTest.notMappedToTestCaseAndPass",
         "result":"Passed"
-      }      
+      },
+      {
+        "source":"CalculatorSumTest.mappedToTestCaseNameAndPass",
+        "result":"Passed",
+         "testCase": {
+            "name": "Mapped to Test Case Name and Pass"
+         }
+      }                  
    ]
 }
 ```

@@ -4,9 +4,9 @@ This project is a TM4J JUnit Integration which aims to generate a file describin
 
 In order to achieve that, you need to annotate the JUnit methods with ```@TestCaseKey``` or ```@TestCase(name = "")```.
 
-JUnit methods which are not annotated with ```@TestCaseKey``` will also be added to the JSON file, but without the testCase key property.
+JUnit methods which are not annotated with ```@TestCaseKey``` will also be added to the JSON file, but without the Test Case Key property.
 
-JUnit methods which are not annotated with ```@TestCase(name = "")``` will also be added to the JSON file, but without the testCase name property.
+JUnit methods which are not annotated with ```@TestCase(name = "")``` will also be added to the JSON file, but without the Test Case Name property.
 
 
 ## Usage

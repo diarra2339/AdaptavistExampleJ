@@ -12,6 +12,6 @@ public class CustomFormatFile {
 
     public static void generateCustomFormatFile(CustomFormatContainer customFormatContainer) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(DEFAULT_TM4J_RESULT_FILE_NAME), customFormatContainer);
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(DEFAULT_TM4J_RESULT_FILE_NAME), customFormatContainer);
     }
 }

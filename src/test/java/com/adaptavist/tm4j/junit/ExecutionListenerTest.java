@@ -30,10 +30,6 @@ public class ExecutionListenerTest {
         executionListener.testRunStarted(null);
         executionListener.testRunFinished(null);
 
-//        CustomFormatContainerBuilder customFormatContainerBuilder = new CustomFormatContainerBuilder();
-
-//        generate(customFormatContainerBuilder.getCustomFormatContainer());
-
         CustomFormatContainer customFormatContainer = getTm4jJUnitResults();
         assertTrue(customFormatContainer.getExecutions().isEmpty());
     }

@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public class CustomFormatContainer {
 
+    private Integer version = 1;
+
     private List<CustomFormatExecution> executions = new ArrayList<>();
 
     public List<CustomFormatExecution> getExecutions() {
@@ -25,5 +27,13 @@ public class CustomFormatContainer {
                 .stream()
                 .filter(r -> r.getSource().equals(source))
                 .findFirst();
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

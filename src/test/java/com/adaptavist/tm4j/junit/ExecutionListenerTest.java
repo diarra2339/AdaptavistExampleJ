@@ -1,7 +1,6 @@
 package com.adaptavist.tm4j.junit;
 
 import com.adaptavist.tm4j.junit.annotation.TestCase;
-import com.adaptavist.tm4j.junit.annotation.TestCaseKey;
 import com.adaptavist.tm4j.junit.builder.CustomFormatContainerBuilder;
 import com.adaptavist.tm4j.junit.decorator.TestDescriptionDecorator;
 import com.adaptavist.tm4j.junit.customformat.CustomFormatExecution;
@@ -64,8 +63,8 @@ public class ExecutionListenerTest {
         ExecutionListener executionListener = new ExecutionListener();
         executionListener.testRunStarted(null);
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
-        TestCaseKey testCaseKey2 = testCaseKeyAnnotation("JQA-T2");
+        TestCase testCaseKey1 = testCaseAnnotationWithKey("JQA-T1");
+        TestCase testCaseKey2 = testCaseAnnotationWithKey("JQA-T2");
 
         Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey", testCaseKey1);
         executionListener.testFinished(descriptionJQAT1);
@@ -86,16 +85,13 @@ public class ExecutionListenerTest {
         ExecutionListener executionListener = new ExecutionListener();
         executionListener.testRunStarted(null);
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
-        TestCase testCase1 = testCaseAnnotation("Have one Result For each Test Case Name");
+        TestCase testCase1 = testCaseAnnotation("JQA-T1", "Have one Result For each Test Case Name");
+        TestCase testCase2 = testCaseAnnotation("JQA-T2", "Create File With Empty Result");
 
-        TestCaseKey testCaseKey2 = testCaseKeyAnnotation("JQA-T2");
-        TestCase testCase2 = testCaseAnnotation("Create File With Empty Result");
-
-        Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey", testCaseKey1, testCase1);
+        Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey", testCase1);
         executionListener.testFinished(descriptionJQAT1);
 
-        Description descriptionJQAT2 = Description.createTestDescription(this.getClass(), "shouldCreateFileWithEmptyResult", testCaseKey2, testCase2);
+        Description descriptionJQAT2 = Description.createTestDescription(this.getClass(), "shouldCreateFileWithEmptyResult", testCase2);
         executionListener.testFailure(new Failure(descriptionJQAT2, null));
         executionListener.testFinished(descriptionJQAT2);
 
@@ -117,8 +113,8 @@ public class ExecutionListenerTest {
         ExecutionListener executionListener = new ExecutionListener();
         executionListener.testRunStarted(null);
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
-        TestCaseKey testCaseKey2 = testCaseKeyAnnotation("JQA-T2");
+        TestCase testCaseKey1 = testCaseAnnotationWithKey("JQA-T1");
+        TestCase testCaseKey2 = testCaseAnnotationWithKey("JQA-T2");
 
         Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey", testCaseKey1);
         executionListener.testFinished(descriptionJQAT1);
@@ -145,7 +141,7 @@ public class ExecutionListenerTest {
         ExecutionListener executionListener = new ExecutionListener();
         executionListener.testRunStarted(null);
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
+        TestCase testCaseKey1 = testCaseAnnotationWithKey("JQA-T1");
 
         Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey", testCaseKey1);
         executionListener.testFinished(descriptionJQAT1);
@@ -173,8 +169,8 @@ public class ExecutionListenerTest {
     public void shouldHaveOnlyOneResultForTestCaseKeyWhenItRunsAsParameterizedJUnitTest() throws IOException {
         CustomFormatContainerBuilder customFormatContainerBuilder = new CustomFormatContainerBuilder();
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
-        TestCaseKey testCaseKey2 = testCaseKeyAnnotation("JQA-T2");
+        TestCase testCaseKey1 = testCaseAnnotationWithKey("JQA-T1");
+        TestCase testCaseKey2 = testCaseAnnotationWithKey("JQA-T2");
 
         Description descriptionParam1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey[0]", testCaseKey1);
         customFormatContainerBuilder.registerFinished(new TestDescriptionDecorator(descriptionParam1));
@@ -194,7 +190,7 @@ public class ExecutionListenerTest {
     public void shouldHaveFailedResultForTestCaseKeyWhenItRunsAsParameterizedJUnitTestAndOneOfThemHaveFailed() throws IOException {
         CustomFormatContainerBuilder customFormatContainerBuilder = new CustomFormatContainerBuilder();
 
-        TestCaseKey testCaseKey1 = testCaseKeyAnnotation("JQA-T1");
+        TestCase testCaseKey1 = testCaseAnnotationWithKey("JQA-T1");
 
         Description descriptionParam1 = Description.createTestDescription(this.getClass(), "shouldHaveOneResultForEachTestCaseKey[0]", testCaseKey1);
         TestDescriptionDecorator failedTestMethodId = new TestDescriptionDecorator(descriptionParam1);
@@ -241,26 +237,22 @@ public class ExecutionListenerTest {
         return new ObjectMapper().readValue(generatedResultFile, CustomFormatContainer.class);
     }
 
-    private TestCaseKey testCaseKeyAnnotation(final String value) {
-        return new TestCaseKey()
-        {
-            @Override
-            public String value()
-            {
-                return value;
-            }
-
-            @Override
-            public Class<? extends Annotation> annotationType()
-            {
-                return TestCaseKey.class;
-            }
-        };
+    private TestCase testCaseAnnotationWithName(String name) {
+        return testCaseAnnotation(null, name);
     }
 
-    private TestCase testCaseAnnotation(String name) {
+    private TestCase testCaseAnnotationWithKey(String key) {
+        return testCaseAnnotation(key, null);
+    }
+
+    private TestCase testCaseAnnotation(String key, String name) {
         return new TestCase()
         {
+            @Override
+            public String key() {
+                return key;
+            }
+
             @Override
             public String name()
             {

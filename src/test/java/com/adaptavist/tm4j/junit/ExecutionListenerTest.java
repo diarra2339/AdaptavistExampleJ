@@ -19,6 +19,7 @@ import static com.adaptavist.tm4j.junit.customformat.CustomFormatConstants.FAILE
 import static com.adaptavist.tm4j.junit.customformat.CustomFormatConstants.PASSED;
 import static com.adaptavist.tm4j.junit.file.CustomFormatFile.generateCustomFormatFile;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class ExecutionListenerTest {
@@ -31,6 +32,25 @@ public class ExecutionListenerTest {
 
         CustomFormatContainer customFormatContainer = getTm4jJUnitResults();
         assertTrue(customFormatContainer.getExecutions().isEmpty());
+    }
+
+    @Test
+    public void shouldNotSetNameWhenItIsNotSetInTestCaseAnnotation() throws Exception {
+        ExecutionListener executionListener = new ExecutionListener();
+        executionListener.testRunStarted(null);
+
+        TestCase testCaseKey = testCaseAnnotationWithKey("JQA-T1");
+
+        Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldPassWithoutATestCaseKey", testCaseKey);
+        executionListener.testFinished(descriptionJQAT1);
+
+        executionListener.testRunFinished(null);
+
+        CustomFormatContainer customFormatContainer = getTm4jJUnitResults();
+
+        assertEquals(1, customFormatContainer.getExecutions().size());
+        CustomFormatExecution jqat1Result = customFormatContainer.getExecutions().get(0);
+        assertNull(jqat1Result.getTestCase().getName());
     }
 
     @Test

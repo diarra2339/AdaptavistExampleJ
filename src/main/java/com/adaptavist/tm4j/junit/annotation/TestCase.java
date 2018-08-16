@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface TestCase {
     String key();
-    String name();
+    String name() default "";
 }

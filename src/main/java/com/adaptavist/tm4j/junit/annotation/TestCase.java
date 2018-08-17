@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface TestCase {
-    String key();
+
+    String key() default "";
     String name() default "";
+
 }

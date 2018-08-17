@@ -54,6 +54,25 @@ public class ExecutionListenerTest {
     }
 
     @Test
+    public void shouldNotSetKeyWhenItIsNotSetInTestCaseAnnotation() throws Exception {
+        ExecutionListener executionListener = new ExecutionListener();
+        executionListener.testRunStarted(null);
+
+        TestCase testCaseName = testCaseAnnotationWithName("Successful login");
+
+        Description descriptionJQAT1 = Description.createTestDescription(this.getClass(), "shouldPassWithoutATestCaseKey", testCaseName);
+        executionListener.testFinished(descriptionJQAT1);
+
+        executionListener.testRunFinished(null);
+
+        CustomFormatContainer customFormatContainer = getTm4jJUnitResults();
+
+        assertEquals(1, customFormatContainer.getExecutions().size());
+        CustomFormatExecution jqat1Result = customFormatContainer.getExecutions().get(0);
+        assertNull(jqat1Result.getTestCase().getKey());
+    }
+
+    @Test
     public void shouldHaveOnePassedAndOneFailResultForEachNotMappedToTestCaseKeyMethod() throws Exception {
         ExecutionListener executionListener = new ExecutionListener();
         executionListener.testRunStarted(null);

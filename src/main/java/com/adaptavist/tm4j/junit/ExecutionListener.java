@@ -50,10 +50,9 @@ public class ExecutionListener extends RunListener {
 
         if (!errorMessages.isEmpty()) {
             printErrorMessages();
-            System.exit(-1);
+        } else {
+            generateCustomFormatFile(customFormatContainerBuilder.getCustomFormatContainer());
         }
-
-        generateCustomFormatFile(customFormatContainerBuilder.getCustomFormatContainer());
     }
 
     private void checkTestCaseAnnotation(Description description) {

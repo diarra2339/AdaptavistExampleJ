@@ -4,8 +4,8 @@
     <servers>
         <server>
             <id>bintray-avst-TM4J</id>
-            <username>${bamboo.deploy.jfrog.user}</username>
-            <password>${bamboo.deploy.jfrog.apikey}</password>
+            <username>${jfrog.user}</username>
+            <password>${jfrog.apikey}</password>
         </server>
     </servers>
     <profiles>

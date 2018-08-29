@@ -7,7 +7,7 @@
     <groupId>com.adaptavist</groupId>
     <artifactId>tm4j-junit-integration</artifactId>
     <version>1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Test Management for Jira JUnit Integration</name>
     <description>JUnit utility to integrate JUnit tests with Test Management for Jira.</description>

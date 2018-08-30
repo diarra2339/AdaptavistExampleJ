@@ -1,3 +1,5 @@
+ [ ![Download](https://api.bintray.com/packages/avst/TM4J/tm4j-junit-integration/images/download.svg) ](https://bintray.com/avst/TM4J/tm4j-junit-integration/_latestVersion)
+
 # TM4J Junit Integration
 
 This project is a TM4J JUnit Integration which aims to generate a file describing the test execution result for each Test Case.
@@ -121,3 +123,7 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
    ]
 }
 ```
+
+## Support
+
+For any issues or enquires please get in touch with the Test Management for Jira team at Adaptavist using the [support portal](https://productsupport.adaptavist.com/servicedesk/customer/portal/27).

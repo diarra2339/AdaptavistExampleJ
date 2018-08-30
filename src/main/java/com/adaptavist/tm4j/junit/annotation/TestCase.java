@@ -7,6 +7,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface TestCaseKey {
-    String value();
+public @interface TestCase {
+
+    String key() default "";
+    String name() default "";
+
 }

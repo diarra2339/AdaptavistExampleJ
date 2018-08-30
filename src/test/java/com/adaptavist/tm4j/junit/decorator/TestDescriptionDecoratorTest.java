@@ -1,53 +1,56 @@
-package com.adaptavist.tm4j.junit;
+package com.adaptavist.tm4j.junit.decorator;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.Description;
 
-public class JUnitTestMethodIDTest {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+public class TestDescriptionDecoratorTest {
 
     @Test
     public void shouldGetDescriptionForRegularJUnitTest() {
         Description description = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForRegularJUnitTest");
-        JUnitTestMethodID testMethodID = new JUnitTestMethodID(description);
+        TestDescriptionDecorator testMethodID = new TestDescriptionDecorator(description);
 
-        Assert.assertTrue(testMethodID.getDescription().endsWith("JUnitTestMethodIDTest.shouldGetDescriptionForRegularJUnitTest"));
+        assertTrue(testMethodID.getSource().endsWith("TestDescriptionDecoratorTest.shouldGetDescriptionForRegularJUnitTest"));
     }
 
     @Test
     public void shouldGetDescriptionForParameterizedJUnitTest() {
         Description description = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForParameterizedJUnitTest[1]");
-        JUnitTestMethodID testMethodID = new JUnitTestMethodID(description);
+        TestDescriptionDecorator testMethodID = new TestDescriptionDecorator(description);
 
-        Assert.assertTrue(testMethodID.getDescription().endsWith("JUnitTestMethodIDTest.shouldGetDescriptionForParameterizedJUnitTest"));
+        assertTrue(testMethodID.getSource().endsWith("TestDescriptionDecoratorTest.shouldGetDescriptionForParameterizedJUnitTest"));
     }
 
     @Test
     public void shouldBeEqualForRegularJUnitTest() {
         Description description = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForRegularJUnitTest");
-        JUnitTestMethodID testMethodID1 = new JUnitTestMethodID(description);
-        JUnitTestMethodID testMethodID2 = new JUnitTestMethodID(description);
+        TestDescriptionDecorator testMethodID1 = new TestDescriptionDecorator(description);
+        TestDescriptionDecorator testMethodID2 = new TestDescriptionDecorator(description);
 
-        Assert.assertTrue(testMethodID1.equals(testMethodID2));
+        assertEquals(testMethodID1, testMethodID2);
     }
 
     @Test
     public void shouldNotBeEqualForRegularJUnitTest() {
         Description description1 = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForRegularJUnitTest");
-        JUnitTestMethodID testMethodID1 = new JUnitTestMethodID(description1);
+        TestDescriptionDecorator testMethodID1 = new TestDescriptionDecorator(description1);
         Description description2 = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForParameterizedJUnitTest");
-        JUnitTestMethodID testMethodID2 = new JUnitTestMethodID(description2);
+        TestDescriptionDecorator testMethodID2 = new TestDescriptionDecorator(description2);
 
-        Assert.assertFalse(testMethodID1.equals(testMethodID2));
+        assertNotEquals(testMethodID1, testMethodID2);
     }
 
     @Test
     public void shouldBeEqualForParameterizedJUnitTest() {
         Description description1 = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForParameterizedJUnitTest[0]");
-        JUnitTestMethodID testMethodID1 = new JUnitTestMethodID(description1);
+        TestDescriptionDecorator testMethodID1 = new TestDescriptionDecorator(description1);
         Description description2 = Description.createTestDescription(this.getClass(), "shouldGetDescriptionForParameterizedJUnitTest[1]");
-        JUnitTestMethodID testMethodID2 = new JUnitTestMethodID(description2);
+        TestDescriptionDecorator testMethodID2 = new TestDescriptionDecorator(description2);
 
-        Assert.assertTrue(testMethodID1.equals(testMethodID2));
+        assertEquals(testMethodID1, testMethodID2);
     }
 }

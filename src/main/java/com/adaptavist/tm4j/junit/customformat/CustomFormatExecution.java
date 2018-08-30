@@ -1,22 +1,15 @@
-package com.adaptavist.tm4j.junit.result;
+package com.adaptavist.tm4j.junit.customformat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-public class ExecutionResult {
+public class CustomFormatExecution {
 
     private String source;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String testCaseKey;
     private String result;
 
-    public String getTestCaseKey() {
-        return testCaseKey;
-    }
-
-    public void setTestCaseKey(String testCaseKey) {
-        this.testCaseKey = testCaseKey;
-    }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private CustomFormatTestCase testCase;
 
     public String getResult() {
         return result;
@@ -32,5 +25,13 @@ public class ExecutionResult {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public CustomFormatTestCase getTestCase() {
+        return testCase;
+    }
+
+    public void setTestCase(CustomFormatTestCase testCase) {
+        this.testCase = testCase;
     }
 }

@@ -6,7 +6,34 @@
 
     <groupId>com.adaptavist</groupId>
     <artifactId>tm4j-junit-integration</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Test Management for Jira JUnit Integration</name>
+    <description>JUnit utility to integrate JUnit tests with Test Management for Jira.</description>
+    <url>https://bitbucket.org/Adaptavist/tm4j-junit-integration</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Adaptavist - Test Management for Jira</name>
+            <email>testmanagement@adaptavist.com</email>
+            <organization>Adaptavist</organization>
+            <organizationUrl>http://www.adaptavist.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://bitbucket.org/Adaptavist/tm4j-junit-integration.git</connection>
+        <developerConnection>scm:git:ssh://bitbucket.org:Adaptavist/tm4j-junit-integration.git</developerConnection>
+        <url>https://bitbucket.org/Adaptavist/tm4j-junit-integration</url>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -20,6 +47,30 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -32,6 +83,28 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+            </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-avst-TM4J</id>
+            <name>avst-TM4J</name>
+            <url>https://api.bintray.com/maven/avst/TM4J/tm4j-junit-integration/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>

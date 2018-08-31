@@ -126,4 +126,4 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
 
 ## Support
 
-For any issues or enquires please get in touch with the Test Management for Jira team at Adaptavist using the [support portal](https://productsupport.adaptavist.com/servicedesk/customer/portal/27).
+For any issues or enquiries please get in touch with the Test Management for Jira team at Adaptavist using the [support portal](https://productsupport.adaptavist.com/servicedesk/customer/portal/27).

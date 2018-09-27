@@ -94,6 +94,7 @@ Now, you can run your tests with ```mvn test``` and the TM4J test execution resu
 
 ```
 {
+   "version": 1,
    "executions":[
       {
          "source":"CalculatorSumTest.sumTwoNumbersAndPass",

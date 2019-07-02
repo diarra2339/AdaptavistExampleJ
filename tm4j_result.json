@@ -1,0 +1,10 @@
+{
+  "version" : 1,
+  "executions" : [ {
+    "source" : "com.adaptavist.tm4j.junit.ExecutionListenerTest.shouldHaveTestCaseWithName",
+    "result" : "Passed",
+    "testCase" : {
+      "name" : "Successful Login"
+    }
+  } ]
+}
